@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>For You ❤️</title>
+  <title>Tanu Janm Mahotsav 🌸</title>
 
-  <!-- Google Fonts: Elegant Serif & Warm Handwritten Script -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=MedievalSharp&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+
+  <!-- External Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -17,118 +20,341 @@
   <!-- Background Particle / Star Canvas -->
   <canvas id="starCanvas"></canvas>
 
-  <!-- Background Ambient Glow -->
+  <!-- Center Ambient Glow -->
   <div class="ambient-glow" id="ambientGlow"></div>
 
-  <!-- App Viewport Container (Mobile-First 390px base) -->
-  <main class="experience-container" id="app">
+  <!-- Music Mini-Player (Floating Bottom Right) -->
+  <aside class="mini-music-bar" id="miniMusicBar" aria-label="Audio player">
+    <div class="music-info">
+      <span class="music-note-icon">🎵</span>
+      <span class="music-track-title" id="currentTrackTitle">Day 01 Melody</span>
+    </div>
+    <div class="music-controls">
+      <button class="music-btn" id="playPauseBtn" aria-label="Play / Pause">▶</button>
+      <button class="music-btn" id="muteBtn" aria-label="Mute / Unmute">🔊</button>
+    </div>
+    <audio id="globalAudio" preload="none"></audio>
+  </aside>
 
-    <!-- ================= STAGE 1: MAGICAL FLOWER BLOOM ================= -->
-    <section class="stage active" id="stage1">
-      <div class="flower-wrap" id="flowerWrap">
-        <svg class="rose-svg" viewBox="0 0 200 240" aria-label="A blooming rose">
-          <defs>
-            <radialGradient id="petalGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#f8a5b8" />
-              <stop offset="60%" stop-color="#c93b58" />
-              <stop offset="100%" stop-color="#540e1f" />
-            </radialGradient>
-            <linearGradient id="stemGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#4a6b47" />
-              <stop offset="100%" stop-color="#1f361d" />
-            </linearGradient>
-          </defs>
-          
-          <!-- Stem and Leaves -->
-          <path class="rose-stem" d="M 100,120 Q 95,170 100,230" fill="none" stroke="url(#stemGrad)" stroke-width="4" stroke-linecap="round"/>
-          <path class="rose-leaf leaf-left" d="M 98,170 Q 70,165 65,145 Q 85,150 98,170" fill="#3a5a37"/>
-          <path class="rose-leaf leaf-right" d="M 99,190 Q 125,185 130,165 Q 110,170 99,190" fill="#3a5a37"/>
+  <!-- ====================================================================
+       EXPERIENCE 1: DAY 1 SECRET PROLOGUE (Standalone Minimal Experience)
+       ==================================================================== -->
+  <div class="day1-secret-experience" id="day1Experience">
+    <main class="experience-container" id="app">
 
-          <!-- Layered Petals (Outer to Inner) -->
-          <g class="rose-petals">
-            <path class="petal petal-outer-1" d="M 100,120 C 50,110 50,55 100,45 C 150,55 150,110 100,120 Z" fill="url(#petalGlow)"/>
-            <path class="petal petal-outer-2" d="M 85,115 C 45,90 55,45 95,50 C 125,50 140,85 85,115 Z" fill="url(#petalGlow)"/>
-            <path class="petal petal-outer-3" d="M 115,115 C 155,90 145,45 105,50 C 75,50 60,85 115,115 Z" fill="url(#petalGlow)"/>
-            <path class="petal petal-mid-1" d="M 100,105 C 70,95 70,60 100,60 C 130,60 130,95 100,105 Z" fill="#dd4a6a"/>
-            <path class="petal petal-mid-2" d="M 92,100 C 75,85 80,65 100,65 C 120,65 125,85 92,100 Z" fill="#e8617f"/>
-            <circle class="petal petal-core" cx="100" cy="78" r="10" fill="#f38ba0"/>
-          </g>
-        </svg>
-      </div>
+      <!-- STAGE 1: FLOWER BLOOM -->
+      <section class="stage active" id="stage1">
+        <div class="flower-wrap" id="flowerWrap">
+          <svg class="rose-svg" viewBox="0 0 200 240" aria-label="A blooming rose">
+            <defs>
+              <radialGradient id="petalGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#f8a5b8" />
+                <stop offset="60%" stop-color="#c93b58" />
+                <stop offset="100%" stop-color="#540e1f" />
+              </radialGradient>
+              <linearGradient id="stemGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#4a6b47" />
+                <stop offset="100%" stop-color="#1f361d" />
+              </linearGradient>
+            </defs>
+            <path class="rose-stem" d="M 100,120 Q 95,170 100,230" fill="none" stroke="url(#stemGrad)" stroke-width="4" stroke-linecap="round"/>
+            <path class="rose-leaf leaf-left" d="M 98,170 Q 70,165 65,145 Q 85,150 98,170" fill="#3a5a37"/>
+            <path class="rose-leaf leaf-right" d="M 99,190 Q 125,185 130,165 Q 110,170 99,190" fill="#3a5a37"/>
+            <g class="rose-petals">
+              <path class="petal petal-outer-1" d="M 100,120 C 50,110 50,55 100,45 C 150,55 150,110 100,120 Z" fill="url(#petalGlow)"/>
+              <path class="petal petal-outer-2" d="M 85,115 C 45,90 55,45 95,50 C 125,50 140,85 85,115 Z" fill="url(#petalGlow)"/>
+              <path class="petal petal-outer-3" d="M 115,115 C 155,90 145,45 105,50 C 75,50 60,85 115,115 Z" fill="url(#petalGlow)"/>
+              <path class="petal petal-mid-1" d="M 100,105 C 70,95 70,60 100,60 C 130,60 130,95 100,105 Z" fill="#dd4a6a"/>
+              <path class="petal petal-mid-2" d="M 92,100 C 75,85 80,65 100,65 C 120,65 125,85 92,100 Z" fill="#e8617f"/>
+              <circle class="petal petal-core" cx="100" cy="78" r="10" fill="#f38ba0"/>
+            </g>
+          </svg>
+        </div>
+        <div class="stage-text-wrap">
+          <h1 class="script-title" id="introTitle"></h1>
+        </div>
+      </section>
 
-      <div class="stage-text-wrap">
-        <h1 class="script-title fade-in-delayed" id="introTitle"></h1>
-      </div>
-    </section>
-
-    <!-- ================= STAGE 2: THE ENVELOPE ================= -->
-    <section class="stage" id="stage2">
-      <div class="envelope-container" id="envelopeWrapper" role="button" tabindex="0" aria-label="Open letter">
-        <div class="envelope" id="envelope">
-          <div class="envelope-back"></div>
-          <div class="letter-preview" id="letterPreview">
-            <div class="letter-preview-lines">
-              <span></span><span></span><span></span>
+      <!-- STAGE 2: ENVELOPE -->
+      <section class="stage" id="stage2">
+        <div class="envelope-container" id="envelopeWrapper" role="button" tabindex="0" aria-label="Open letter">
+          <div class="envelope" id="envelope">
+            <div class="envelope-back"></div>
+            <div class="letter-preview" id="letterPreview">
+              <div class="letter-preview-lines">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="envelope-front-left"></div>
+            <div class="envelope-front-right"></div>
+            <div class="envelope-bottom"></div>
+            <div class="envelope-flap" id="envelopeFlap">
+              <div class="wax-seal">❤️</div>
             </div>
           </div>
-          <div class="envelope-front-left"></div>
-          <div class="envelope-front-right"></div>
-          <div class="envelope-bottom"></div>
-          <div class="envelope-flap" id="envelopeFlap">
-            <div class="wax-seal">❤️</div>
+        </div>
+        <p class="instruction-text" id="envelopePrompt">Open it ❤️</p>
+      </section>
+
+      <!-- STAGE 3: LETTER -->
+      <section class="stage" id="stage3">
+        <article class="parchment-card" id="parchmentCard">
+          <div class="card-inner">
+            <div class="card-header-ornament">✦ ✦ ✦</div>
+            <div class="letter-content font-script" id="letterText"></div>
+            <div class="card-footer">
+              <button class="romantic-btn" id="toWishBtn" type="button"></button>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- STAGE 4: WISH -->
+      <section class="stage" id="stage4">
+        <div class="wish-card">
+          <div class="wish-content font-serif" id="wishPromptText"></div>
+          <div class="wish-action">
+            <button class="romantic-btn glow-btn" id="wishDoneBtn" type="button"></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- STAGE 5: FINAL MESSAGE -->
+      <section class="stage" id="stage5">
+        <div class="final-card">
+          <div class="sacred-heart-wrap" id="sacredHeart" role="button" tabindex="0" aria-label="A glowing heart">
+            <div class="sacred-heart">❤️</div>
+            <div class="heart-pulse"></div>
+          </div>
+          <div class="final-content font-serif" id="finalMessageText"></div>
+          <div class="easter-egg-toast" id="easterEggToast" aria-live="polite"></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ====================================================================
+       EXPERIENCE 2: REGULAR TANU JANM MAHOTSAV WEBSITE (Days 2 - 12)
+       ==================================================================== -->
+  <div class="mahotsav-master-site hidden" id="mahotsavSite">
+    
+    <!-- Top Floating Waving Banner -->
+    <header class="mahotsav-banner-wrap">
+      <div class="mahotsav-floating-banner">
+        <span class="banner-sparkle">✨</span>
+        <h1 class="banner-title">TANU JANM MAHOTSAV</h1>
+        <span class="banner-sparkle">✨</span>
+      </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="mahotsav-nav" aria-label="Main Navigation">
+      <div class="nav-pill-box">
+        <button class="nav-item active" onclick="switchTab('home')" id="tab-home">Home</button>
+        <button class="nav-item" onclick="switchTab('map')" id="tab-map">Map of Us</button>
+        <button class="nav-item" onclick="switchTab('aboutUs')" id="tab-aboutUs">About Us</button>
+        <button class="nav-item" onclick="switchTab('aboutHer')" id="tab-aboutHer">About Her</button>
+        <button class="nav-item" onclick="switchTab('wishes')" id="tab-wishes">Wishes</button>
+        <button class="nav-item" onclick="switchTab('hint')" id="tab-hint">Hint</button>
+      </div>
+    </nav>
+
+    <!-- Global Dynamic Happy Day Bar Component -->
+    <section class="happy-day-bar-section">
+      <div class="happy-day-pill">
+        <span class="happy-day-icon">🌸</span>
+        <span class="happy-day-text" id="dynamicHappyDayText">Happy Day Two, Cupcake ❤️</span>
+        <span class="happy-day-icon">🌸</span>
+      </div>
+    </section>
+
+    <!-- TAB 1: HERO / HOME -->
+    <section class="mahotsav-view active-view" id="view-home">
+      <div class="hero-card">
+        <div class="hero-day-tag" id="heroDayTag">CHAPTER II</div>
+        <h2 class="hero-theme-title font-fairy" id="heroThemeTitle">Our Precious Memories</h2>
+        <p class="hero-intro-text font-serif" id="heroIntroText">Revisiting where we sat as two people figuring each other out.</p>
+
+        <!-- Dynamic Hero Media Frame -->
+        <div class="hero-media-frame">
+          <div class="hero-media-placeholder" id="heroMediaBox">
+            <span class="hero-large-icon" id="heroIcon">☕</span>
+          </div>
+        </div>
+
+        <div class="hero-today-message-box">
+          <p class="font-hand hero-message-text" id="heroMessageText">"We sat here once figuring each other out... P.S. Meena Chachi still doesn't know!" 😂</p>
+        </div>
+
+        <!-- Live Together Counter -->
+        <div class="together-timer-box">
+          <h3 class="timer-title">LOVING YOU EVERY SECOND FOR</h3>
+          <div class="timer-grid font-mono">
+            <div class="time-block"><span id="liveTogDays">0</span><label>Days</label></div>
+            <div class="time-block"><span id="liveTogHours">0</span><label>Hours</label></div>
+            <div class="time-block"><span id="liveTogMins">0</span><label>Mins</label></div>
+            <div class="time-block"><span id="liveTogSecs">0</span><label>Secs</label></div>
           </div>
         </div>
       </div>
-      <p class="instruction-text" id="envelopePrompt">Open it ❤️</p>
     </section>
 
-    <!-- ================= STAGE 3: THE LETTER ================= -->
-    <section class="stage" id="stage3">
-      <article class="parchment-card" id="parchmentCard">
-        <div class="card-inner">
-          <div class="card-header-ornament">✦ ✦ ✦</div>
-          <div class="letter-content font-script" id="letterText">
-            <!-- Injected smoothly via script.js -->
-          </div>
-          <div class="card-footer">
-            <button class="romantic-btn" id="toWishBtn" type="button"></button>
-          </div>
+    <!-- TAB 2: MAP OF US (12-Day Illustrated Connected Trail) -->
+    <section class="mahotsav-view" id="view-map">
+      <div class="parchment-map-wrapper">
+        <div class="map-header">
+          <h2 class="map-title font-fairy">📜 TREASURE MAP OF US 📜</h2>
+          <p class="map-subtitle font-map">~ Sea of Memories & The Enchanted 12-Day Journey ~</p>
         </div>
+
+        <div class="interactive-map-frame" id="mapCanvasFrame">
+          <svg class="map-svg-trail" viewBox="0 0 1000 650" preserveAspectRatio="none">
+            <path d="M 100,530 C 130,460 170,420 220,400 C 280,380 320,450 360,480 C 420,520 480,480 490,400 C 500,320 440,280 380,260 C 300,230 220,200 240,120 C 260,60 380,70 450,110 C 530,160 590,140 640,90 C 720,40 820,80 840,160 C 860,240 760,280 720,340 C 680,400 730,480 790,470 C 860,460 880,530 890,560" 
+                  fill="none" stroke="#a63d24" stroke-width="4" stroke-dasharray="8 6" class="animated-trail-path"/>
+          </svg>
+
+          <!-- 12 Map Pins Generated Dynamically -->
+          <div class="map-pins-container" id="mapPinsContainer"></div>
+        </div>
+
+        <p class="map-hint-footer font-map">⚓ Tap an unlocked landmark to open the daily memory logbook ⚓</p>
+      </div>
+    </section>
+
+    <!-- TAB 3: ABOUT US (Digital Scrapbook & Collage) -->
+    <section class="mahotsav-view" id="view-aboutUs">
+      <div class="scrapbook-header">
+        <h2 class="font-fairy view-heading">Our Little Universe</h2>
+        <p class="font-serif view-subheading">Memories, inside jokes, and the quiet milestones only we understand.</p>
+      </div>
+
+      <div class="scrapbook-grid">
+        <article class="polaroid-card rotate-neg">
+          <div class="polaroid-img-box"><span>☕</span></div>
+          <p class="polaroid-caption font-hand">Chai Kappi Moments</p>
+          <p class="polaroid-note font-serif">Where nervous dates turned into endless laughter.</p>
+        </article>
+
+        <article class="polaroid-card rotate-pos">
+          <div class="polaroid-img-box"><span>🏎️</span></div>
+          <p class="polaroid-caption font-hand">Arcade & Speed</p>
+          <p class="polaroid-note font-serif">Competitive, sharp, and always playing fair!</p>
+        </article>
+
+        <article class="polaroid-card rotate-neg">
+          <div class="polaroid-img-box"><span>🍝</span></div>
+          <p class="polaroid-caption font-hand">White Sauce Pasta</p>
+          <p class="polaroid-note font-serif">Comfort food, slow evenings, and deep talks.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- TAB 4: ABOUT HER (Special Magazine Edition) -->
+    <section class="mahotsav-view" id="view-aboutHer">
+      <div class="magazine-cover">
+        <span class="magazine-tag">SPECIAL EDITION</span>
+        <h2 class="magazine-title font-fairy" id="magTitle">TANU</h2>
+        <p class="magazine-subtitle" id="magSub">A SPECIAL EDITION FOR SOMEONE SPECIAL</p>
+      </div>
+
+      <!-- User's Original Supplied Writing -->
+      <article class="magazine-article font-serif">
+        <div class="pull-quote font-hand">"8 arab logon ki duniya mein hum dono ka milna? Ye luck nahi... ye destiny hai ❤️"</div>
+        <div class="magazine-text-body" id="aboutHerStoryText"></div>
       </article>
+
+      <!-- 4 Pillars of Character -->
+      <div class="pillars-grid" id="aboutHerPillars"></div>
     </section>
 
-    <!-- ================= STAGE 4: THE BIRTHDAY WISH ================= -->
-    <section class="stage" id="stage4">
-      <div class="wish-card">
-        <div class="wish-content font-serif" id="wishPromptText">
-          <!-- Injected via script.js -->
+    <!-- TAB 5: WISHES AROUND THE WORLD -->
+    <section class="mahotsav-view" id="view-wishes">
+      <div class="wishes-hero">
+        <h2 class="font-fairy view-heading">The World Is Wishing You</h2>
+        <p class="font-serif view-subheading">Multilingual love pouring in from every corner of the earth.</p>
+      </div>
+
+      <!-- Cultural Cards -->
+      <div class="cultural-wishes-grid">
+        <div class="cultural-card">
+          <span class="flag-icon">🇫🇷</span>
+          <h4>France</h4>
+          <p class="wish-phrase">Joyeux Anniversaire, Tanu!</p>
+          <span class="wish-trans">"May your 20th year be filled with pure light."</span>
         </div>
-        <div class="wish-action">
-          <button class="romantic-btn glow-btn" id="wishDoneBtn" type="button"></button>
+        <div class="cultural-card">
+          <span class="flag-icon">🇯🇵</span>
+          <h4>Japan</h4>
+          <p class="wish-phrase">お誕生日おめでとう、タヌ！</p>
+          <span class="wish-trans">"Wishing you boundless peace, health, and smiling days."</span>
         </div>
+        <div class="cultural-card">
+          <span class="flag-icon">🇪🇸</span>
+          <h4>Spain</h4>
+          <p class="wish-phrase">¡Feliz Cumpleaños, Tanu!</p>
+          <span class="wish-trans">"Celebrating the brightest soul in the world."</span>
+        </div>
+      </div>
+
+      <!-- Animals Whispering Messages -->
+      <div class="animals-whisper-box">
+        <h3 class="animals-title font-hand">🐾 And the animals have something to say...</h3>
+        <div class="animal-quotes-grid">
+          <div class="animal-quote"><span class="animal-emoji">🐕</span><p>"Thank you for always stopping to pat our heads and feeding us! Woof! ❤️"</p></div>
+          <div class="animal-quote"><span class="animal-emoji">🐰</span><p>"DohDoh loves you more than all the fresh carrots in the universe!"</p></div>
+        </div>
+      </div>
+
+      <div class="wishes-closing-card font-serif">
+        <p class="closing-lead font-hand">Maybe the whole world isn't actually wishing you...</p>
+        <p>Maybe it's just me, finding a hundred different ways to tell you the exact same thing:</p>
+        <p class="closing-highlight font-fairy">I love you, Cupcake. ❤️</p>
       </div>
     </section>
 
-    <!-- ================= STAGE 5: FINAL MESSAGE & EASTER EGG ================= -->
-    <section class="stage" id="stage5">
-      <div class="final-card">
-        <!-- Interactive Heart with Easter Egg -->
-        <div class="sacred-heart-wrap" id="sacredHeart" role="button" tabindex="0" aria-label="A glowing heart">
-          <div class="sacred-heart">❤️</div>
-          <div class="heart-pulse"></div>
-        </div>
+    <!-- TAB 6: HINT (Photo Constellation & Reflections) -->
+    <section class="mahotsav-view" id="view-hint">
+      <div class="hint-header">
+        <h2 class="font-fairy view-heading">Constellation of Memories</h2>
+        <p class="font-serif view-subheading">"Every picture is a little piece of the person I fell for."</p>
+      </div>
 
-        <div class="final-content font-serif" id="finalMessageText">
-          <!-- Injected via script.js -->
-        </div>
-
-        <!-- Easter Egg Toast Notification -->
-        <div class="easter-egg-toast" id="easterEggToast" aria-live="polite"></div>
+      <div class="constellation-frame">
+        <div class="photo-constellation-node node-1" onclick="openPhotoModal('Photo Memory 1', 'The smile that lights up the darkest night.')">🌸</div>
+        <div class="photo-constellation-node node-2" onclick="openPhotoModal('Photo Memory 2', 'Unfiltered joy and pure laughter.')">✨</div>
+        <div class="photo-constellation-node node-3" onclick="openPhotoModal('Photo Memory 3', 'Soft eyes and a fierce heart.')">💖</div>
+        <div class="photo-constellation-node node-4" onclick="openPhotoModal('Photo Memory 4', 'My forever favorite travel partner.')">🌙</div>
       </div>
     </section>
 
-  </main>
+  </div>
 
+  <!-- ====================================================================
+       DAILY MEMORY MODAL / LOGBOOK
+       ==================================================================== -->
+  <div class="modal-overlay hidden" id="memoryModal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeDayModal()" aria-label="Close modal">✕</button>
+      <div class="modal-badge font-fairy" id="modalDayBadge">DAY 2</div>
+      <h3 class="modal-theme-title font-fairy" id="modalThemeTitle">Our Precious Memories</h3>
+      <p class="modal-location font-serif" id="modalLocation">📍 Chai Kappi</p>
+      
+      <div class="modal-body-content">
+        <p class="modal-story-text font-serif" id="modalStoryText"></p>
+        <blockquote class="modal-quote font-hand" id="modalQuoteText"></blockquote>
+      </div>
+
+      <div class="modal-footer">
+        <button class="romantic-btn visible" onclick="playDayAudio()" id="modalPlayMusicBtn">🎵 Play Memory Song</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="data/languages.js"></script>
+  <script src="data/days.js"></script>
+  <script src="data/about-her.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

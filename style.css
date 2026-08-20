@@ -1,6 +1,5 @@
 /* ==========================================================================
-   COLOR PALETTE & DESIGN VARIABLES
-   Change theme colors, font families, and visual parameters here.
+   DESIGN TOKENS & MASTER PALETTE
    ========================================================================== */
 :root {
   --bg-dark: #0d070e;
@@ -23,14 +22,15 @@
 
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-script: 'Caveat', cursive, sans-serif;
+  --font-hand: 'Sacramento', cursive;
+  --font-fairy: 'Cinzel Decorative', serif;
+  --font-map: 'MedievalSharp', cursive, serif;
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
 
   --transition-slow: 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-  --transition-smooth: 0.4s ease;
+  --transition-smooth: 0.35s ease;
 }
 
-/* ==========================================================================
-   GLOBAL RESET & ACCESSIBILITY
-   ========================================================================== */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -45,12 +45,20 @@ html, body {
   background-color: var(--bg-dark);
   background-image: var(--bg-gradient);
   color: var(--text-light);
-  font-family: var(--font-serif);
-  font-size: 17px;
+  font-family: var(--font-sans);
+  font-size: 16px;
   line-height: 1.6;
 }
 
-/* Starfield / Particles Canvas */
+.font-serif { font-family: var(--font-serif); }
+.font-script { font-family: var(--font-script); }
+.font-hand { font-family: var(--font-hand); }
+.font-fairy { font-family: var(--font-fairy); }
+.font-map { font-family: var(--font-map); }
+
+.hidden { display: none !important; }
+
+/* Star Canvas */
 #starCanvas {
   position: fixed;
   inset: 0;
@@ -60,24 +68,25 @@ html, body {
   z-index: 1;
 }
 
-/* Center Ambient Glow */
 .ambient-glow {
   position: fixed;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 320px;
-  height: 320px;
+  width: 340px;
+  height: 340px;
   background: radial-gradient(circle, var(--rose-glow) 0%, rgba(212, 77, 107, 0) 70%);
   border-radius: 50%;
-  filter: blur(40px);
+  filter: blur(45px);
   pointer-events: none;
   z-index: 2;
   transition: opacity 1.5s ease;
   opacity: 0.7;
 }
 
-/* Base Viewport Container (Mobile First) */
+/* ==========================================================================
+   EXPERIENCE 1: DAY 1 PROLOGUE STYLING
+   ========================================================================== */
 .experience-container {
   position: relative;
   z-index: 10;
@@ -92,7 +101,6 @@ html, body {
   align-items: center;
 }
 
-/* Stage Visibility Management */
 .stage {
   display: none;
   width: 100%;
@@ -111,46 +119,11 @@ html, body {
   transform: translateY(0);
 }
 
-/* ==========================================================================
-   STAGE 1: FLOWER & INTRO
-   ========================================================================== */
-.flower-wrap {
-  width: 170px;
-  height: 200px;
-  margin-bottom: 24px;
-  position: relative;
-}
-
-.rose-svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  filter: drop-shadow(0 10px 25px rgba(212, 77, 107, 0.4));
-}
-
-/* Stem Growth */
-.rose-stem {
-  stroke-dasharray: 120;
-  stroke-dashoffset: 120;
-  animation: growStem 2.2s ease-out forwards;
-}
-
-/* Leaf Unfurl */
-.rose-leaf {
-  opacity: 0;
-  transform-origin: 100px 170px;
-  transform: scale(0.2);
-  animation: bloomLeaves 1.5s ease-out 1.2s forwards;
-}
-
-/* Layered Petal Blooming Animation */
-.petal {
-  transform-origin: 100px 80px;
-  transform: scale(0.05);
-  opacity: 0;
-  animation: bloomPetals 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
-}
-
+.flower-wrap { width: 170px; height: 200px; margin-bottom: 24px; }
+.rose-svg { width: 100%; height: 100%; filter: drop-shadow(0 10px 25px rgba(212, 77, 107, 0.4)); }
+.rose-stem { stroke-dasharray: 120; stroke-dashoffset: 120; animation: growStem 2.2s ease-out forwards; }
+.rose-leaf { opacity: 0; transform-origin: 100px 170px; transform: scale(0.2); animation: bloomLeaves 1.5s ease-out 1.2s forwards; }
+.petal { transform-origin: 100px 80px; transform: scale(0.05); opacity: 0; animation: bloomPetals 2.4s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
 .petal-outer-1 { animation-delay: 0.6s; }
 .petal-outer-2 { animation-delay: 0.8s; }
 .petal-outer-3 { animation-delay: 1.0s; }
@@ -158,14 +131,8 @@ html, body {
 .petal-mid-2   { animation-delay: 1.4s; }
 .petal-core    { animation-delay: 1.6s; }
 
-@keyframes growStem {
-  to { stroke-dashoffset: 0; }
-}
-
-@keyframes bloomLeaves {
-  to { opacity: 0.9; transform: scale(1); }
-}
-
+@keyframes growStem { to { stroke-dashoffset: 0; } }
+@keyframes bloomLeaves { to { opacity: 0.9; transform: scale(1); } }
 @keyframes bloomPetals {
   0% { opacity: 0; transform: scale(0.05) rotate(-10deg); }
   60% { opacity: 0.9; }
@@ -182,382 +149,314 @@ html, body {
   transform: translateY(10px);
   transition: opacity 1.8s ease 2.2s, transform 1.8s ease 2.2s;
 }
+.script-title.visible { opacity: 1; transform: translateY(0); }
 
-.script-title.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ==========================================================================
-   STAGE 2: ENVELOPE
-   ========================================================================== */
 .envelope-container {
-  width: 260px;
-  height: 175px;
-  position: relative;
-  cursor: pointer;
-  perspective: 900px;
-  margin-bottom: 24px;
+  width: 260px; height: 175px; position: relative; cursor: pointer; perspective: 900px; margin-bottom: 24px;
 }
-
 .envelope {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  background: #c2957b;
-  border-radius: 6px;
-  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.6), 0 0 25px var(--gold-glow);
-  transition: transform var(--transition-smooth);
+  width: 100%; height: 100%; position: relative; background: #c2957b; border-radius: 6px;
+  box-shadow: 0 16px 35px rgba(0,0,0,0.6), 0 0 25px var(--gold-glow);
 }
-
-.envelope:hover, .envelope-container:focus .envelope {
-  transform: translateY(-4px) scale(1.02);
-}
-
-.envelope-back {
-  position: absolute;
-  inset: 0;
-  background: #a87961;
-  border-radius: 6px;
-}
-
-/* Letter Peek Inside */
+.envelope-back { position: absolute; inset: 0; background: #a87961; border-radius: 6px; }
 .letter-preview {
-  position: absolute;
-  top: 8px;
-  left: 12px;
-  right: 12px;
-  height: 90px;
-  background: var(--paper-cream);
-  border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-  padding: 10px;
+  position: absolute; top: 8px; left: 12px; right: 12px; height: 90px; background: var(--paper-cream);
+  border-radius: 4px; padding: 10px; transition: transform 0.8s ease;
 }
-
-.letter-preview-lines span {
-  display: block;
-  height: 4px;
-  background: #ebd8c8;
-  margin-bottom: 6px;
-  border-radius: 2px;
-}
+.letter-preview-lines span { display: block; height: 4px; background: #ebd8c8; margin-bottom: 6px; border-radius: 2px; }
 .letter-preview-lines span:nth-child(2) { width: 80%; }
 .letter-preview-lines span:nth-child(3) { width: 55%; }
-
-/* Envelope Fold Layers */
 .envelope-front-left {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 87.5px 0 87.5px 130px;
-  border-color: transparent transparent transparent #bd8f76;
-  border-bottom-left-radius: 6px;
-  z-index: 3;
+  position: absolute; bottom: 0; left: 0; width: 0; height: 0; border-style: solid;
+  border-width: 87.5px 0 87.5px 130px; border-color: transparent transparent transparent #bd8f76; z-index: 3;
 }
-
 .envelope-front-right {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 87.5px 130px 87.5px 0;
-  border-color: transparent #b5856c transparent transparent;
-  border-bottom-right-radius: 6px;
-  z-index: 3;
+  position: absolute; bottom: 0; right: 0; width: 0; height: 0; border-style: solid;
+  border-width: 87.5px 130px 87.5px 0; border-color: transparent #b5856c transparent transparent; z-index: 3;
 }
-
 .envelope-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 130px 92px 130px;
-  border-color: transparent transparent #a87961 transparent;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
-  z-index: 4;
+  position: absolute; bottom: 0; left: 0; right: 0; width: 0; height: 0; border-style: solid;
+  border-width: 0 130px 92px 130px; border-color: transparent transparent #a87961 transparent; z-index: 4;
 }
-
-/* Flap & Wax Seal */
 .envelope-flap {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 95px 130px 0 130px;
-  border-color: #d1a38a transparent transparent transparent;
-  transform-origin: top;
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 5;
+  position: absolute; top: 0; left: 0; right: 0; width: 0; height: 0; border-style: solid;
+  border-width: 95px 130px 0 130px; border-color: #d1a38a transparent transparent transparent;
+  transform-origin: top; transition: transform 0.8s ease; z-index: 5;
 }
-
 .wax-seal {
-  position: absolute;
-  top: -85px;
-  left: -18px;
-  width: 36px;
-  height: 36px;
-  background: radial-gradient(circle, #b8334d 0%, #731326 100%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.4);
-  border: 1px dashed rgba(255,255,255,0.3);
+  position: absolute; top: -85px; left: -18px; width: 36px; height: 36px;
+  background: radial-gradient(circle, #b8334d 0%, #731326 100%); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 15px;
 }
-
-/* Envelope Open State */
-.envelope-container.open .envelope-flap {
-  transform: rotateX(180deg);
-  z-index: 1;
-}
-
-.envelope-container.open .letter-preview {
-  transform: translateY(-65px);
-  z-index: 2;
-}
+.envelope-container.open .envelope-flap { transform: rotateX(180deg); z-index: 1; }
+.envelope-container.open .letter-preview { transform: translateY(-65px); z-index: 2; }
 
 .instruction-text {
-  font-family: var(--font-script);
-  font-size: 1.6rem;
-  color: var(--rose-soft);
+  font-family: var(--font-script); font-size: 1.6rem; color: var(--rose-soft);
   text-shadow: 0 2px 10px rgba(212, 77, 107, 0.5);
-  animation: softPulse 2.5s ease-in-out infinite;
 }
 
-@keyframes softPulse {
-  0%, 100% { opacity: 0.8; transform: translateY(0); }
-  50% { opacity: 1; transform: translateY(-3px); }
-}
-
-/* ==========================================================
-   STAGE 3: PARCHMENT LETTER
-   ========================================================== */
 .parchment-card {
-  width: 100%;
-  background: var(--paper-cream);
-  color: var(--text-dark);
-  border-radius: 12px;
-  padding: 34px 26px;
-  box-shadow: 0 20px 45px var(--paper-shadow), 0 0 20px var(--gold-glow);
-  border: 1px solid var(--paper-border);
-  position: relative;
-  transform: scale(0.96);
-  transition: transform var(--transition-slow), opacity var(--transition-slow);
+  width: 100%; background: var(--paper-cream); color: var(--text-dark);
+  border-radius: 12px; padding: 34px 26px; box-shadow: 0 20px 45px var(--paper-shadow);
 }
+.card-header-ornament { font-size: 12px; letter-spacing: 6px; color: var(--gold-accent); margin-bottom: 20px; }
+.letter-content { font-size: 1.65rem; line-height: 1.5; text-align: left; }
+.letter-line, .wish-line, .final-line { opacity: 0; transform: translateY(8px); transition: opacity 0.8s ease, transform 0.8s ease; margin-bottom: 12px; }
+.letter-line.revealed, .wish-line.revealed, .final-line.revealed { opacity: 1; transform: translateY(0); }
 
-.card-header-ornament {
-  font-size: 12px;
-  letter-spacing: 6px;
-  color: var(--gold-accent);
-  margin-bottom: 22px;
-  text-align: center;
-}
-
-.letter-content {
-  font-family: var(--font-script);
-  font-size: 1.65rem;
-  line-height: 1.5;
-  text-align: left;
-  min-height: 180px;
-}
-
-.letter-line {
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.9s ease, transform 0.9s ease;
-  margin-bottom: 12px;
-}
-
-.letter-line.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.card-footer {
-  margin-top: 26px;
-  text-align: center;
-}
-
-/* Button Styling (Intimate & Integrated) */
 .romantic-btn {
-  background: transparent;
-  border: 1.5px solid var(--rose-primary);
-  color: var(--rose-primary);
-  font-family: var(--font-serif);
-  font-size: 1.05rem;
-  font-weight: 600;
-  padding: 12px 24px;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all var(--transition-smooth);
-  opacity: 0;
-  transform: translateY(8px);
-  pointer-events: none;
+  background: transparent; border: 1.5px solid var(--rose-primary); color: var(--rose-primary);
+  font-family: var(--font-serif); font-size: 1.05rem; font-weight: 600; padding: 10px 22px;
+  border-radius: 30px; cursor: pointer; transition: all var(--transition-smooth);
 }
+.romantic-btn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.romantic-btn:hover { background: var(--rose-primary); color: #fff; box-shadow: 0 6px 20px var(--rose-glow); }
 
-.romantic-btn.visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
+.sacred-heart-wrap { width: 60px; height: 60px; position: relative; display: flex; align-items: center; justify-content: center; cursor: pointer; margin-bottom: 20px; }
+.sacred-heart { font-size: 28px; filter: drop-shadow(0 0 12px var(--rose-primary)); }
+.heart-pulse { position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--rose-soft); animation: ringPulse 2.8s infinite; }
+@keyframes ringPulse { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(1.6); opacity: 0; } }
 
-.romantic-btn:hover, .romantic-btn:focus {
-  background: var(--rose-primary);
-  color: #fff;
-  box-shadow: 0 6px 20px var(--rose-glow);
-  outline: none;
-}
-
-/* ==========================================================
-   STAGE 4: BIRTHDAY WISH
-   ========================================================== */
-.wish-card {
-  width: 100%;
-  padding: 20px 10px;
-}
-
-.wish-content {
-  font-size: 1.35rem;
-  line-height: 1.7;
-  color: var(--text-light);
-  margin-bottom: 36px;
-}
-
-.wish-line {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 1.2s ease, transform 1.2s ease;
-  margin-bottom: 14px;
-}
-
-.wish-line.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.glow-btn {
-  border-color: var(--rose-soft);
-  color: var(--text-light);
-  background: rgba(212, 77, 107, 0.2);
-  box-shadow: 0 0 15px var(--rose-glow);
-}
-
-.glow-btn:hover {
-  background: var(--rose-primary);
-}
-
-/* ==========================================================
-   STAGE 5: FINAL MESSAGE & EASTER EGG
-   ========================================================== */
-.final-card {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
-.sacred-heart-wrap {
-  width: 60px;
-  height: 60px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin-bottom: 24px;
-  user-select: none;
-}
-
-.sacred-heart {
-  font-size: 28px;
-  filter: drop-shadow(0 0 12px var(--rose-primary));
-  transition: transform 0.2s ease;
-}
-
-.sacred-heart-wrap:active .sacred-heart {
-  transform: scale(0.85);
-}
-
-.heart-pulse {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 1px solid var(--rose-soft);
-  animation: ringPulse 2.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
-  pointer-events: none;
-}
-
-@keyframes ringPulse {
-  0% { transform: scale(0.6); opacity: 0.9; }
-  100% { transform: scale(1.6); opacity: 0; }
-}
-
-.final-content {
-  font-size: 1.35rem;
-  line-height: 1.7;
-  color: var(--text-light);
-}
-
-.final-line {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 1.2s ease, transform 1.2s ease;
-  margin-bottom: 14px;
-}
-
-.final-line.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Easter Egg Toast Alert */
 .easter-egg-toast {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background: rgba(35, 17, 30, 0.92);
-  border: 1px solid var(--rose-primary);
-  color: var(--rose-soft);
-  font-family: var(--font-script);
-  font-size: 1.45rem;
-  padding: 10px 22px;
-  border-radius: 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-  pointer-events: none;
-  opacity: 0;
-  transition: all 0.5s ease;
-  z-index: 100;
-  white-space: nowrap;
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: rgba(35, 17, 30, 0.92); border: 1px solid var(--rose-primary); color: var(--rose-soft);
+  font-family: var(--font-script); font-size: 1.45rem; padding: 10px 22px; border-radius: 20px;
+  opacity: 0; transition: all 0.5s ease; z-index: 100;
+}
+.easter-egg-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ==========================================================================
+   EXPERIENCE 2: REGULAR MAHOTSAV MASTER SITE
+   ========================================================================== */
+.mahotsav-master-site {
+  position: relative;
+  z-index: 10;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px 14px 90px 14px;
 }
 
-.easter-egg-toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
+@keyframes waveBanner {
+  0%, 100% { transform: translateY(0) rotate(-0.5deg); }
+  50% { transform: translateY(-5px) rotate(0.5deg); }
 }
 
-/* ==========================================================
-   REDUCED MOTION ACCESSIBILITY
-   ========================================================== */
+.mahotsav-banner-wrap {
+  position: sticky; top: 8px; z-index: 40; display: flex; justify-content: center; margin-bottom: 14px;
+}
+.mahotsav-floating-banner {
+  animation: waveBanner 4s ease-in-out infinite;
+  background: linear-gradient(135deg, #e11d48, #c026d3, #f43f5e);
+  color: #fff; padding: 8px 24px; border-radius: 50px;
+  display: flex; align-items: center; gap: 8px; box-shadow: 0 8px 25px rgba(225, 29, 72, 0.4);
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+}
+.banner-title { font-family: var(--font-fairy); font-size: 1.05rem; letter-spacing: 1.5px; }
+
+/* Navigation Pill Box */
+.mahotsav-nav {
+  display: flex; justify-content: center; margin-bottom: 16px; position: sticky; top: 58px; z-index: 35;
+}
+.nav-pill-box {
+  background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.9); padding: 5px 8px; border-radius: 50px;
+  display: flex; gap: 4px; overflow-x: auto; max-width: 100%; box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+.nav-item {
+  background: transparent; border: none; font-size: 0.8rem; font-weight: 600;
+  padding: 6px 14px; border-radius: 30px; color: #4a2835; cursor: pointer;
+  white-space: nowrap; transition: var(--transition-smooth);
+}
+.nav-item.active { background: var(--rose-primary); color: #fff; box-shadow: 0 3px 10px var(--rose-glow); }
+
+/* Dynamic Happy Day Bar Component */
+.happy-day-bar-section { display: flex; justify-content: center; margin-bottom: 20px; }
+.happy-day-pill {
+  background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); border: 1px solid var(--rose-soft);
+  padding: 6px 18px; border-radius: 50px; display: flex; align-items: center; gap: 8px;
+}
+.happy-day-text { font-family: var(--font-serif); font-size: 1.05rem; font-weight: 600; color: #9f1239; transition: opacity 0.3s ease; }
+
+/* Views */
+.mahotsav-view { display: none; opacity: 0; transform: translateY(8px); transition: opacity 0.4s ease, transform 0.4s ease; }
+.mahotsav-view.active-view { display: block; opacity: 1; transform: translateY(0); }
+
+/* HERO CARD */
+.hero-card {
+  background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(18px); border-radius: 24px;
+  padding: 24px 20px; text-align: center; border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 15px 35px rgba(212, 77, 107, 0.15); color: #371b26;
+}
+.hero-day-tag { font-family: var(--font-fairy); font-size: 0.8rem; letter-spacing: 2px; color: var(--rose-primary); margin-bottom: 6px; }
+.hero-theme-title { font-size: 1.6rem; color: #881337; margin-bottom: 8px; font-weight: 700; }
+.hero-intro-text { font-size: 1.15rem; color: #4c2937; margin-bottom: 18px; }
+
+.hero-media-frame {
+  width: 100%; height: 200px; border-radius: 18px; overflow: hidden; margin-bottom: 18px;
+  background: linear-gradient(135deg, #ffe4e6, #f3e8ff); display: flex; align-items: center; justify-content: center;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+}
+.hero-large-icon { font-size: 4.5rem; }
+.hero-today-message-box { margin-bottom: 22px; padding: 12px; background: #fff5f7; border-radius: 14px; }
+.hero-message-text { font-size: 1.6rem; color: #9f1239; }
+
+/* Together Live Timer Grid */
+.together-timer-box { border-top: 1px dashed var(--rose-soft); padding-top: 16px; }
+.timer-title { font-size: 0.72rem; letter-spacing: 2px; color: var(--rose-primary); font-weight: 700; margin-bottom: 10px; }
+.timer-grid { display: flex; justify-content: center; gap: 8px; }
+.time-block { background: #ffe4e6; padding: 8px 12px; border-radius: 12px; color: #9f1239; font-weight: 700; font-size: 1.2rem; }
+.time-block label { display: block; font-family: var(--font-sans); font-size: 0.65rem; font-weight: 500; color: #9d4c67; }
+
+/* ==========================================================================
+   PARCHMENT MAP OF US
+   ========================================================================== */
+.parchment-map-wrapper {
+  background: #f4ebd0; background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.4), rgba(180,140,90,0.25));
+  border: 8px solid #6b4423; outline: 3px double #d4af37; outline-offset: -5px;
+  border-radius: 20px; padding: 16px 12px; color: #543419;
+}
+.map-header { text-align: center; margin-bottom: 12px; }
+.map-title { font-size: 1.3rem; color: #872314; }
+.map-subtitle { font-size: 0.85rem; color: #7c502b; }
+
+.interactive-map-frame {
+  position: relative; width: 100%; aspect-ratio: 16 / 11; border: 2px solid #a57849;
+  border-radius: 14px; background: rgba(239, 227, 195, 0.75); overflow: hidden;
+}
+.map-svg-trail { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+@keyframes trailMove { to { stroke-dashoffset: -120; } }
+.animated-trail-path { animation: trailMove 8s linear infinite; }
+
+.map-pin {
+  position: absolute; transform: translate(-50%, -50%); display: flex; flex-direction: column;
+  align-items: center; cursor: pointer; transition: transform 0.2s ease; z-index: 10;
+}
+.map-pin:hover { transform: translate(-50%, -50%) scale(1.15); }
+.map-pin-icon { font-size: 1.2rem; }
+.map-pin-num {
+  width: 22px; height: 22px; border-radius: 50%; background: #872314; color: #fff;
+  font-family: var(--font-map); font-size: 0.75rem; display: flex; align-items: center; justify-content: center;
+  border: 1px solid #ffd700;
+}
+.map-pin.locked { opacity: 0.45; filter: grayscale(1); }
+.map-pin.locked .map-pin-num { background: #555; border-color: #888; }
+.map-hint-footer { text-align: center; font-size: 0.75rem; margin-top: 10px; color: #6b4423; }
+
+/* ==========================================================================
+   ABOUT US SCRAPBOOK
+   ========================================================================== */
+.scrapbook-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 16px; }
+.polaroid-card {
+  background: #fff; padding: 12px 12px 20px 12px; border-radius: 4px; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  color: #333; text-align: center; transition: transform 0.3s ease;
+}
+.rotate-neg { transform: rotate(-2deg); }
+.rotate-pos { transform: rotate(2deg); }
+.polaroid-img-box { height: 140px; background: #ffe4e6; display: flex; align-items: center; justify-content: center; font-size: 3rem; border-radius: 2px; }
+.polaroid-caption { font-size: 1.8rem; color: #9f1239; margin-top: 8px; }
+.polaroid-note { font-size: 0.95rem; color: #666; }
+
+/* ==========================================================================
+   ABOUT HER MAGAZINE
+   ========================================================================== */
+.magazine-cover {
+  background: linear-gradient(135deg, #fda4af, #f472b6); border-radius: 18px; padding: 24px 16px;
+  text-align: center; color: #fff; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(244, 114, 182, 0.3);
+}
+.magazine-tag { font-size: 0.7rem; letter-spacing: 2px; font-weight: 700; background: rgba(0,0,0,0.2); padding: 4px 12px; border-radius: 20px; }
+.magazine-title { font-size: 2.8rem; margin: 6px 0; }
+.magazine-subtitle { font-size: 0.85rem; letter-spacing: 1px; }
+
+.magazine-article {
+  background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(14px); padding: 22px 18px;
+  border-radius: 18px; color: #371b26; margin-bottom: 20px;
+}
+.pull-quote { font-size: 1.8rem; color: #be123c; text-align: center; margin-bottom: 16px; line-height: 1.3; }
+.magazine-text-body { font-size: 1.15rem; line-height: 1.7; white-space: pre-line; }
+
+.pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.pillar-card {
+  background: rgba(255, 255, 255, 0.8); border-radius: 14px; padding: 14px; display: flex; gap: 12px; align-items: flex-start;
+}
+.pillar-icon { font-size: 2rem; }
+.pillar-title { font-size: 0.95rem; font-weight: 700; color: #9f1239; }
+.pillar-desc { font-size: 0.85rem; color: #555; }
+
+/* ==========================================================================
+   WISHES AROUND THE WORLD
+   ========================================================================== */
+.cultural-wishes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.cultural-card {
+  background: rgba(255, 255, 255, 0.8); padding: 14px; border-radius: 14px; text-align: center;
+}
+.flag-icon { font-size: 1.8rem; display: block; margin-bottom: 4px; }
+.wish-phrase { font-weight: 700; color: #9f1239; margin: 4px 0; font-size: 0.9rem; }
+.wish-trans { font-size: 0.78rem; color: #666; font-style: italic; display: block; }
+
+.animals-whisper-box {
+  background: #fff1f2; border: 1.5px dashed var(--rose-soft); border-radius: 18px; padding: 16px; margin-bottom: 20px;
+}
+.animals-title { font-size: 1.8rem; color: #be123c; text-align: center; margin-bottom: 10px; }
+.animal-quotes-grid { display: flex; flex-direction: column; gap: 10px; }
+.animal-quote { display: flex; gap: 12px; align-items: center; font-size: 0.88rem; color: #4c1d2e; }
+
+.wishes-closing-card {
+  background: rgba(255, 255, 255, 0.85); padding: 22px; border-radius: 18px; text-align: center; color: #371b26; font-size: 1.15rem;
+}
+.closing-lead { font-size: 1.8rem; color: #be123c; }
+.closing-highlight { font-size: 1.4rem; color: #881337; font-weight: 700; margin-top: 8px; }
+
+/* ==========================================================================
+   HINT CONSTELLATION
+   ========================================================================== */
+.constellation-frame {
+  width: 100%; height: 320px; background: radial-gradient(circle, #2a1128 0%, #0d070e 100%);
+  border-radius: 20px; border: 1px solid var(--rose-soft); position: relative; overflow: hidden; margin-top: 14px;
+}
+.photo-constellation-node {
+  position: absolute; width: 45px; height: 45px; border-radius: 50%; background: rgba(255,255,255,0.15);
+  border: 1.5px solid var(--rose-soft); display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; cursor: pointer; transition: transform 0.3s ease; box-shadow: 0 0 15px var(--rose-glow);
+}
+.photo-constellation-node:hover { transform: scale(1.25); background: var(--rose-primary); }
+.node-1 { top: 25%; left: 30%; }
+.node-2 { top: 35%; left: 70%; }
+.node-3 { top: 70%; left: 40%; }
+.node-4 { top: 65%; left: 75%; }
+
+/* ==========================================================================
+   MINI MUSIC BAR & MODAL
+   ========================================================================== */
+.mini-music-bar {
+  position: fixed; bottom: 14px; right: 14px; z-index: 50;
+  background: rgba(29, 15, 30, 0.88); backdrop-filter: blur(12px); border: 1px solid var(--rose-primary);
+  border-radius: 50px; padding: 6px 14px; display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+.music-info { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--rose-soft); }
+.music-btn {
+  background: transparent; border: none; color: #fff; cursor: pointer; font-size: 0.9rem; padding: 2px 4px;
+}
+
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 100; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+}
+.modal-card {
+  background: var(--paper-cream); color: var(--text-dark); max-width: 440px; width: 100%;
+  border-radius: 20px; padding: 28px 22px; position: relative; box-shadow: 0 20px 45px rgba(0,0,0,0.5);
+  border: 2px solid var(--paper-border);
+}
+.modal-close-btn { position: absolute; top: 14px; right: 16px; background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #888; }
+.modal-badge { font-size: 0.75rem; letter-spacing: 2px; color: var(--rose-primary); font-weight: 700; }
+.modal-theme-title { font-size: 1.4rem; color: #881337; margin: 4px 0; }
+.modal-location { font-size: 0.9rem; color: #777; margin-bottom: 14px; }
+.modal-story-text { font-size: 1.15rem; line-height: 1.6; margin-bottom: 12px; }
+.modal-quote { font-size: 1.6rem; color: var(--rose-primary); text-align: center; margin: 14px 0; }
+.modal-footer { text-align: center; margin-top: 18px; }
+
+/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
