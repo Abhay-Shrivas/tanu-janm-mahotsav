@@ -10,7 +10,7 @@
 const CONFIG = {
   // EMERGENCY MANUAL OVERRIDE: Set to null for automatic IST date calculation.
   // Set to a number (1 through 12) to force that specific day mode.
-  manualDayOverride: null,
+  manualDayOverride: 2,
 
   // Campaign start date in IST: September 1, 2026
   startYear: 2026,
